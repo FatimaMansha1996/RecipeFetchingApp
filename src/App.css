@@ -1,42 +1,58 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* Reset */
+html, body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #fff8f0;  /* nice light background */
+   display: flex;
+  justify-content: center; 
+}
+
+/* Main container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* horizontal centering */
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;        /* center horizontally */
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;     /* center text */
+}
+
+/* Recipe grid */
+.recipe-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  justify-items: center;  /* center cards horizontally */
+  width: 100%;
+  padding: 20px 0;
+  overflow-y: auto;       /* scroll if content is long */
+}
+
+/* Modal for RecipeDetails */
+.recipe-details {
+  position: fixed;        /* only modal uses fixed */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  background-color: rgba(0,0,0,0.9);
+  color: white;
+  overflow-y: auto;
+  padding: 20px;
+  z-index: 1000;
+  border-radius: 10px;
+}
+
+/* Loader & Error */
+.loader, .error {
   text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+  font-weight: bold;
+  margin: 20px 0;
 }

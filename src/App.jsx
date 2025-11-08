@@ -1,35 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import Header from "./header";
+import SearchBar from "./SearchBar";
+import RecipeList from "./RecipeList";
+import RecipeDetails from "./RecipeDetails";
+import Loader from "./Loader";
+import Error from "./Error";
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+
+  const fetchRecipes = async (searchTerm) => {
+    setLoading(true);
+    setError("");
+    setRecipes([]);
+    try {
+      const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`);
+      if (!res.ok) throw new Error("Failed to fetch recipes");
+      const data = await res.json();
+      if (!data.meals) {
+        setError("No recipes found!");
+      } else {
+        setRecipes(data.meals);
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className= "app-container">
+      
+      <Header />
+      <SearchBar onSearch={fetchRecipes} />
+      {loading && <Loader />}
+      {error && <Error message={error} />}
+      <RecipeList
+  recipes={recipes}
+  onSelect={setSelectedRecipe}
+  onBack={() => setRecipes([])} // clears the list
+/>
+      <RecipeDetails recipe={selectedRecipe} onClose={() => setSelectedRecipe(null)} />
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -1,0 +1,33 @@
+.recipe-details {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  color: white;
+  overflow-y: auto;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.recipe-details img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.close-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff7043;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.close-button:hover {
+  background-color: #ff5722;
+}

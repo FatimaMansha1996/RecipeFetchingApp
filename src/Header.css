@@ -1,0 +1,7 @@
+/* Header */
+.header {
+  text-align: center;
+  width: 100%;       /* take full width of container */
+  margin-bottom: 20px;
+  align-items: center; /* horizontal centering */
+}
