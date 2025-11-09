@@ -1,50 +1,42 @@
 import React, { useState } from "react";
-import Header from "./header";
+import Header from "./Header";
 import SearchBar from "./SearchBar";
 import RecipeList from "./RecipeList";
 import RecipeDetails from "./RecipeDetails";
-import Loader from "./Loader";
-import Error from "./Error";
 import './App.css';
 
 function App() {
-  const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // Initial state = null (no search yet)
+  const [recipes, setRecipes] = useState(null);
   const [error, setError] = useState("");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   const fetchRecipes = async (searchTerm) => {
-    setLoading(true);
     setError("");
-    setRecipes([]);
+    setRecipes([]); // clear previous recipes
     try {
+      // Optional: show loading in RecipeList by setting a temporary state
+      setRecipes([{ loading: true }]);
       const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`);
       if (!res.ok) throw new Error("Failed to fetch recipes");
       const data = await res.json();
-      if (!data.meals) {
-        setError("No recipes found!");
-      } else {
-        setRecipes(data.meals);
-      }
+      setRecipes(data.meals || []); // array of recipes or empty array
     } catch (err) {
+      setRecipes([]); // empty array triggers “No recipes found”
       setError(err.message);
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
-    <div className= "app-container">
-      
+    <div className="app-container">
       <Header />
       <SearchBar onSearch={fetchRecipes} />
-      {loading && <Loader />}
-      {error && <Error message={error} />}
-      <RecipeList
-  recipes={recipes}
-  onSelect={setSelectedRecipe}
-  onBack={() => setRecipes([])} // clears the list
-/>
+
+      {/* Inline error */}
+      {error && <p className="error-message">⚠️ {error}</p>}
+
+      <RecipeList recipes={recipes} onSelect={setSelectedRecipe} />
+
       <RecipeDetails recipe={selectedRecipe} onClose={() => setSelectedRecipe(null)} />
     </div>
   );

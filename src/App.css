@@ -21,6 +21,13 @@ html, body {
   box-sizing: border-box;
   text-align: center;     /* center text */
 }
+/* Erorr msg */
+.error {
+  text-align: center;
+  color: red;
+  margin: 20px;
+  font-weight: bold;
+}
 
 /* Recipe grid */
 .recipe-list {
