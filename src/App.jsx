@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Header from "./Header";
+import Header from "./header";
 import SearchBar from "./SearchBar";
 import RecipeList from "./RecipeList";
 import RecipeDetails from "./RecipeDetails";
