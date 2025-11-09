@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import "./SearchBar.css";
 
 function SearchBar({ onSearch }) {
+  // creating a state for term
   const [term, setTerm] = useState("");
-
+// handling the search button 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (term.trim() !== "") {
@@ -13,6 +14,7 @@ function SearchBar({ onSearch }) {
   };
 
   return (
+    // Search button
     <form onSubmit={handleSubmit} className="search-form">
       <input
         type="text"

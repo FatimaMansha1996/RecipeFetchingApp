@@ -2,8 +2,9 @@ import React from "react";
 import "./RecipeDetails.css";
 
 function RecipeDetails({ recipe, onClose }) {
+  // If no recipe is selected, don't render anything
   if (!recipe) return null;
-
+// Create an array to store ingredients and measures
   const ingredients = [];
   for (let i = 1; i <= 20; i++) {
     const ingredient = recipe[`strIngredient${i}`];
